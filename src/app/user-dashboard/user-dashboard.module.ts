@@ -5,6 +5,7 @@ import { UserComponent } from './user/user.component';
 import { LogoutComponent } from './logout/logout.component';
 import { LoginComponent } from './login/login.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 
 
@@ -16,7 +17,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     LoginComponent
   ],
   imports: [
-    CommonModule,ReactiveFormsModule
+    CommonModule,ReactiveFormsModule,HttpClientModule
   ],
   exports: [AdminComponent,UserComponent,LogoutComponent , LoginComponent]
 })
