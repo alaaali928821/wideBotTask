@@ -6,8 +6,11 @@ admin could edit and add while user only could see her data.
 you could logout anytime when you on the app check the bottom footer 
 ## Users
 username / password :
+
 admin / 123
+
 user /123
+
 ## Home view/ login 
 ![image](https://github.com/alaaali928821/wideBotTask/assets/54397483/d167e233-b0fa-49c7-b802-e70d5e30b0c2)
 
