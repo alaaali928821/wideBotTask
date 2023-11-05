@@ -1,0 +1,11 @@
+.logout-link {
+    color: #f06d86;
+    text-decoration: none;
+    margin-left: 10px;
+  }
+  
+  .logout-link:hover {
+    text-decoration: underline;
+    cursor: pointer;
+  }
+  
