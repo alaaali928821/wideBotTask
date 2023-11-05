@@ -1,6 +1,6 @@
 <div class="user-list-container">
     <h2 class="user-list-title">User List</h2>
-    <button (click)="addUser()">Add User</button>
+    <button (click)="openAddModal()">Add User</button>
     <ul>
         <li *ngFor="let user of users" class="user-card">
             <h3 class="user-name">{{ user.name }}</h3>
@@ -15,7 +15,7 @@
 
 
     <!-- Edit User Modal -->
-    <div #editUserModal *ngIf="showEditUserModal">
+    <div *ngIf="showEditUserModal">
         <div class="modal">
             <button type="button" class="close" (click)="closeEditUserModal()" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
@@ -41,3 +41,30 @@
     </div>
 
 
+
+
+      <!-- Add User Modal -->
+      <div  *ngIf="showAddUserModal">
+        <div class="modal">
+            <button type="button" class="close" (click)="closeAddUser()" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+
+            <form [formGroup]="userAddForm" (ngSubmit)="addUser()">
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" formControlName="name">
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" formControlName="email">
+                </div>
+                <div class="form-group">
+                    <label for="phone">Phone</label>
+                    <input type="text" id="phone" formControlName="phone">
+                </div>
+                <button type="submit" class="btn btn-primary">Save</button>
+            </form>
+        </div>
+
+    </div>

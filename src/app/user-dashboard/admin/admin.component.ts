@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { User } from 'src/app/models/user.model';
 import { UserService } from 'src/app/user.service';
@@ -11,13 +11,20 @@ import { UserService } from 'src/app/user.service';
 export class AdminComponent implements OnInit {
   users: User[] = [];
   userForm: FormGroup;
+  userAddForm: FormGroup;
   selectedUser: User | null = null;
-  @ViewChild('editUserModal') editUserModal: any;
   showEditUserModal: boolean = false;
+  showAddUserModal: boolean = false;
 
 
   constructor(private userService: UserService, private fb: FormBuilder) {
     this.userForm = this.fb.group({
+      name: ['', [Validators.required]],
+      email: ['', [Validators.required]],
+      phone: ['', [Validators.required]]
+    });
+
+    this.userAddForm = this.fb.group({
       name: ['', [Validators.required]],
       email: ['', [Validators.required]],
       phone: ['', [Validators.required]]
@@ -28,13 +35,6 @@ export class AdminComponent implements OnInit {
     this.getUsers()
   }
 
-  initForm() {
-    this.userForm = this.fb.group({
-      name: ['', [Validators.required]],
-      email: ['', [Validators.required]],
-      phone: ['', [Validators.required]]
-    });
-  }
 
   getUsers(): void {
     this.userService.getUsers().subscribe((users: User[]) => {
@@ -42,7 +42,7 @@ export class AdminComponent implements OnInit {
     });
   }
 
-  deleteUser(user:User){
+  deleteUser(user: User) {
     if (confirm('Are you sure you want to delete this user?')) {
       const index = this.users.findIndex((u) => u.id === user.id);
       if (index !== -1) {
@@ -51,8 +51,15 @@ export class AdminComponent implements OnInit {
     }
   }
 
-  addUser(){
-
+  addUser() {
+    let newUser: User = {};
+    if (this.userAddForm.valid) {
+      newUser.name = this.userAddForm.get('name')?.value;
+      newUser.email = this.userAddForm.get('email')?.value;
+      newUser.phone = this.userAddForm.get('phone')?.value;
+      this.updatedUser(newUser)
+    }
+    this.closeAddUser()
   }
 
   saveEditedUser() {
@@ -71,10 +78,12 @@ export class AdminComponent implements OnInit {
     if (indexToUpdate !== -1) {
       this.users[indexToUpdate] = updatedUser;
       this.users = [...this.users];
+    } else {
+      this.users.push(updatedUser)
     }
   }
 
-  
+
   openEditUserModal(user: User) {
     this.showEditUserModal = true;
     this.selectedUser = user;
@@ -85,8 +94,14 @@ export class AdminComponent implements OnInit {
     });
   }
 
+  openAddModal() {
+    this.showAddUserModal = true;
+  }
   closeEditUserModal() {
     this.showEditUserModal = false;
   }
-  
+
+  closeAddUser() {
+    this.showAddUserModal = false;
+  }
 }

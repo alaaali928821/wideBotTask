@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { staticData } from 'src/assets/defines';
 import { User } from './models/user.model';
 
@@ -10,7 +10,7 @@ import { User } from './models/user.model';
 export class UserService {
   constructor(private http: HttpClient) {}
   getUsers(): Observable<User[]> {
-    return this.http.get<User[]>(staticData.BASE_URL);
+    return of(staticData.ALL_USERS);
   }
 
   addUser(user: User): Observable<User> {

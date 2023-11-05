@@ -39,7 +39,16 @@
     margin-bottom: 10px;
   }
   
-
+  button{
+    background-color: #f06d86;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    margin-right: 10px ;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+  }
 
 /* Modal Container */
 .modal {
@@ -102,7 +111,6 @@
     border-radius: 5px;
   }
   
-
   .modal button {
     background-color: #f06d86;
     color: #fff;
