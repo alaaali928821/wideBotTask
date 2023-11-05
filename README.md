@@ -18,3 +18,6 @@ user /123
 ![image](https://github.com/alaaali928821/wideBotTask/assets/54397483/0f64cee5-b922-4d5e-8bfd-506d605add13)
 
 
+## user view
+- when you login as user a default user will show < for the Demo case >
+![image](https://github.com/alaaali928821/wideBotTask/assets/54397483/9fc18868-6d8d-4fd2-8aa5-93fbc907e96f)
