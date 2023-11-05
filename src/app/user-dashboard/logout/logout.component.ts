@@ -11,7 +11,6 @@ export class LogoutComponent {
 
   constructor(public router: Router) { }
   logout() {
-    debugger
     this.router.navigate([staticData.LOGIN_ROUTE])
   }
 }
