@@ -8,8 +8,12 @@ import { User } from './models/user.model';
   providedIn: 'root'
 })
 export class UserService {
-  allUsers: User[] = [];
-  constructor(private http: HttpClient) {}
+  allUsers: User[] = staticData.ALL_USERS;
+  constructor(private http: HttpClient) {
+    this.getAllUsers();
+
+  }
+
   getUsers(): Observable<User[]> {
     return this.http.get<User[]>(staticData.BASE_URL);
   }

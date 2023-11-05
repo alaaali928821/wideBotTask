@@ -19,7 +19,7 @@ export class AdminComponent implements OnInit {
   showAddUserModal: boolean = false;
 
 
-  constructor(private userService: UserService, private fb: FormBuilder,public router: Router) {
+  constructor(private userService: UserService, private fb: FormBuilder, public router: Router) {
     this.userForm = this.fb.group({
       name: ['', [Validators.required]],
       email: ['', [Validators.required]],
@@ -34,7 +34,7 @@ export class AdminComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getUsers()
+    this.users = this.userService.allUsers
   }
 
 
@@ -46,9 +46,9 @@ export class AdminComponent implements OnInit {
 
   deleteUser(user: User): void {
     if (confirm('Are you sure you want to delete this user?')) {
-      const index = this.users.findIndex((u) => u.id === user.id);
+      const index = this.userService.allUsers.findIndex((u) => u.id === user.id);
       if (index !== -1) {
-        this.users.splice(index, 1);
+        this.userService.allUsers.splice(index, 1);
       }
     }
   }
@@ -59,6 +59,7 @@ export class AdminComponent implements OnInit {
       newUser.name = this.userAddForm.get('name')?.value;
       newUser.email = this.userAddForm.get('email')?.value;
       newUser.phone = this.userAddForm.get('phone')?.value;
+      newUser.id = Math.floor(Math.random() * 10000) + 1
       this.updatedUser(newUser)
     }
     this.closeAddUser()
@@ -76,13 +77,14 @@ export class AdminComponent implements OnInit {
   }
 
   updatedUser(updatedUser: User): void {
-    const indexToUpdate = this.users.findIndex(user => user.id === updatedUser.id);
+    const indexToUpdate = this.userService.allUsers.findIndex(user => user.id === updatedUser.id);
     if (indexToUpdate !== -1) {
-      this.users[indexToUpdate] = updatedUser;
-      this.users = [...this.users];
+      this.userService.allUsers[indexToUpdate] = updatedUser;
+      this.userService.allUsers = [...this.userService.allUsers];
     } else {
-      this.users.push(updatedUser)
+      this.userService.allUsers.push(updatedUser)
     }
+    this.users = this.userService.allUsers
   }
 
 
@@ -107,7 +109,7 @@ export class AdminComponent implements OnInit {
     this.showAddUserModal = false;
   }
 
-  showAsUser(user: User): void{
+  showAsUser(user: User): void {
     this.router.navigate([staticData.USER_ROUTE, user.id])
   }
 }

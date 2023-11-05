@@ -26,9 +26,10 @@ export class UserComponent {
   ngOnInit(): void {
     this.route.params.subscribe(params => {
       const id = +params['id'];
-      this.userService.getUser(id).subscribe((data)=>{
-        this.user = data;
-      })
+        const userToUpdate = this.userService.allUsers.find((user) => user.id === id);
+        this.user.name = userToUpdate?.name
+        this.user.phone = userToUpdate?.phone
+        this.user.email = userToUpdate?.email
     });
   }
 
@@ -62,7 +63,6 @@ export class UserComponent {
     const indexToUpdate = this.userService.allUsers.findIndex(user => user.id === updatedUser.id);
     if (indexToUpdate !== -1) {
       this.userService.allUsers[indexToUpdate] = updatedUser;
-      this.userService.allUsers = [...this.userService.allUsers];
     }
   }
 }
