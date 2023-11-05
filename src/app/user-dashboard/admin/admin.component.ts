@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { User } from 'src/app/models/user.model';
 import { UserService } from 'src/app/user.service';
+import { staticData } from 'src/assets/defines';
 
 @Component({
   selector: 'app-admin',
@@ -17,7 +19,7 @@ export class AdminComponent implements OnInit {
   showAddUserModal: boolean = false;
 
 
-  constructor(private userService: UserService, private fb: FormBuilder) {
+  constructor(private userService: UserService, private fb: FormBuilder,public router: Router) {
     this.userForm = this.fb.group({
       name: ['', [Validators.required]],
       email: ['', [Validators.required]],
@@ -42,7 +44,7 @@ export class AdminComponent implements OnInit {
     });
   }
 
-  deleteUser(user: User) {
+  deleteUser(user: User): void {
     if (confirm('Are you sure you want to delete this user?')) {
       const index = this.users.findIndex((u) => u.id === user.id);
       if (index !== -1) {
@@ -51,7 +53,7 @@ export class AdminComponent implements OnInit {
     }
   }
 
-  addUser() {
+  addUser(): void {
     let newUser: User = {};
     if (this.userAddForm.valid) {
       newUser.name = this.userAddForm.get('name')?.value;
@@ -62,7 +64,7 @@ export class AdminComponent implements OnInit {
     this.closeAddUser()
   }
 
-  saveEditedUser() {
+  saveEditedUser(): void {
     if (this.userForm.valid && this.selectedUser) {
       this.selectedUser.name = this.userForm.get('name')?.value;
       this.selectedUser.email = this.userForm.get('email')?.value;
@@ -73,7 +75,7 @@ export class AdminComponent implements OnInit {
     this.closeEditUserModal()
   }
 
-  updatedUser(updatedUser: User) {
+  updatedUser(updatedUser: User): void {
     const indexToUpdate = this.users.findIndex(user => user.id === updatedUser.id);
     if (indexToUpdate !== -1) {
       this.users[indexToUpdate] = updatedUser;
@@ -84,7 +86,7 @@ export class AdminComponent implements OnInit {
   }
 
 
-  openEditUserModal(user: User) {
+  openEditUserModal(user: User): void {
     this.showEditUserModal = true;
     this.selectedUser = user;
     this.userForm.patchValue({
@@ -94,14 +96,18 @@ export class AdminComponent implements OnInit {
     });
   }
 
-  openAddModal() {
+  openAddModal(): void {
     this.showAddUserModal = true;
   }
-  closeEditUserModal() {
+  closeEditUserModal(): void {
     this.showEditUserModal = false;
   }
 
-  closeAddUser() {
+  closeAddUser(): void {
     this.showAddUserModal = false;
+  }
+
+  showAsUser(user: User): void{
+    this.router.navigate([staticData.USER_ROUTE, user.id])
   }
 }

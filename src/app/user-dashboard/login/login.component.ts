@@ -3,6 +3,7 @@ import { AuthService } from '../auth.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { staticData } from 'src/assets/defines';
+import { UserService } from 'src/app/user.service';
 
 @Component({
   selector: 'app-login',
@@ -15,6 +16,7 @@ export class LoginComponent {
   loginForm: FormGroup;
 
   constructor(private formBuilder: FormBuilder, private authService: AuthService,
+    public userService: UserService,
     public router: Router) {
     this.loginForm = this.formBuilder.group({
       username: ['', [Validators.required]],
@@ -24,6 +26,7 @@ export class LoginComponent {
 
 
   login() {
+    this.userService.getAllUsers()
     if (this.loginForm.valid) {
       const adminCredentials = this.authService.getAdminCredentials();
       if (
@@ -34,7 +37,7 @@ export class LoginComponent {
         this.router.navigate([staticData.ADMIN_ROUTE])
       } else {
         // Muggles
-        this.router.navigate([staticData.USER_ROUTE])
+        this.router.navigate([staticData.USER_ROUTE, 1]) // defalut user
       }
     }
   }

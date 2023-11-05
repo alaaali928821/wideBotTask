@@ -1,1 +1,33 @@
-<p>user works!</p>
+<li class="user-card">
+    <h3 class="user-name">{{ user.name }}</h3>
+    <p class="user-details">Email: {{ user.email }}</p>
+    <p class="user-details">Phone: {{ user.phone }}</p>
+    <button (click)="openEditUserModal(user)">Edit</button>
+</li>
+
+
+    <!-- Edit User Modal -->
+    <div *ngIf="showEditUserModal">
+        <div class="modal">
+            <button type="button" class="close" (click)="closeEditUserModal()" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+
+            <form [formGroup]="userForm" (ngSubmit)="saveEditedUser()">
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" formControlName="name">
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" formControlName="email">
+                </div>
+                <div class="form-group">
+                    <label for="phone">Phone</label>
+                    <input type="text" id="phone" formControlName="phone">
+                </div>
+                <button type="submit" class="btn btn-primary">Save</button>
+            </form>
+        </div>
+
+    </div>
